@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시판 서비스_글쓴이등록</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+  </head>
+  <body>
+  <div th:replace="common/header :: headerFragment"></div>
+    <div class="container">
+        <div class="page-header" style="text-align: center;" ><h2>🖥 회원가입</h2></div>
+        <form action="author/register" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" class="form-control" id="name" name="name" size="10" maxlength="10">
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" name="email" size="20" maxlength="15">
+            </div>
+            <div class="form-group"> 
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password" size="20" maxlength="15"> 
+            </div>
+            <div class="form-group">
+                <label for="role">사용자권한</label>
+                <select id="role" class="form-select" name="userinfo">
+                    <option value="user">일반유저</option>
+                    <option value="admin">관리자</option>
+                </select>
+            </div>
+            <button type="submit" id="mybutton" class="btn btn-primary">제출</button>
+        </form>
+    </div>
+  </body>
+</html>
