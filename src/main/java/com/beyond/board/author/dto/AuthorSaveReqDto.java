@@ -13,7 +13,7 @@ public class AuthorSaveReqDto {
     private String name;
     private String email;
     private String password;
-//    사용자가 String 요청해도 Role클래스 자동형변환
+//    private String role;  //사용자가 String 요청해도 Role클래스 자동형변환
     private Role role; // Role로 두고 그냥 this.role 넣어도 알아서 형변환해주기는 한다.
 
 
@@ -22,7 +22,8 @@ public class AuthorSaveReqDto {
                 .password(this.password)
                 .name(this.name) // 순서 상관 없다.
                 .email(this.email)
-                .role(this.role).build();
+                .role(this.role)
+                .build();
         return author;
     }
 

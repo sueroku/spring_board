@@ -8,9 +8,11 @@
   </head>
   <body>
   <div th:replace="common/header :: headerFragment"></div>
+  <br>
     <div class="container">
         <div class="page-header" style="text-align: center;" ><h2>🖥 회원가입</h2></div>
-        <form action="author/register" method="post" enctype="application/x-www-form-urlencoded">
+        <br>
+        <form action="/author/create" method="post" enctype="application/x-www-form-urlencoded">
             <div class="form-group">
                 <label for="name">이름</label>
                 <input type="text" class="form-control" id="name" name="name" size="10" maxlength="10">
@@ -21,15 +23,16 @@
             </div>
             <div class="form-group"> 
                 <label for="password">비밀번호</label>
-                <input type="password" class="form-control" id="password" name="password" size="20" maxlength="15"> 
+                <input type="password" class="form-control" id="password" name="password" size="20" maxlength="20">
             </div>
             <div class="form-group">
                 <label for="role">사용자권한</label>
-                <select id="role" class="form-select" name="userinfo">
-                    <option value="user">일반유저</option>
-                    <option value="admin">관리자</option>
+                <select id="role" class="form-select" name="role"> <!--name이 중요해..-->
+                    <option value="USER">일반유저</option>
+                    <option value="ADMIN">관리자</option>
                 </select>
             </div>
+            <br>
             <button type="submit" id="mybutton" class="btn btn-primary">제출</button>
         </form>
     </div>

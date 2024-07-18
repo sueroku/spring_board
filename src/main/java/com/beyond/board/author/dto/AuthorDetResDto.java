@@ -20,8 +20,8 @@ public class AuthorDetResDto {
     private String email;
     private String password;
     private Role role;
+    private int postCount;
     private LocalDateTime createdTime;
-//    private String createDate;
 
     public AuthorDetResDto fromEntity(Author author){
         return AuthorDetResDto.builder()
@@ -30,6 +30,7 @@ public class AuthorDetResDto {
                 .email(author.getEmail())
                 .password(author.getPassword())
                 .role(author.getRole())
+                .postCount(author.getPosts().size())
                 .createdTime(author.getCreatedTime()).build();
     }
 }

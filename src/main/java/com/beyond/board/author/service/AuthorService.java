@@ -38,6 +38,7 @@ public class AuthorService {
         List<Author> authors = authorRepository.findAll();
         for(Author a : authors){
             authorResDtos.add(a.listFromEntity());
+
         }
         return authorResDtos;
     }
