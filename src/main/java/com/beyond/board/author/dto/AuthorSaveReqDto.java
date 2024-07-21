@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,6 +24,7 @@ public class AuthorSaveReqDto {
                 .password(this.password)
                 .name(this.name) // 순서 상관 없다.
                 .email(this.email)
+                .posts(new ArrayList<>()) // #071901 해결 두번째시도
                 .role(this.role)
                 .build();
         return author;

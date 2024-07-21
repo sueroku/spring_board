@@ -5,13 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>회원 상세 조회</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+    <style>
+        #update-form{
+            display : none;
+        }
+    </style>
 </head>
 <body>
     <div th:replace="common/header :: headerFragment"></div>
     <div class="container">
         <div class="page-header"><h1> 👥 회원상세조회</h1></div>
         <table class="table">
-            <tr><th>ID</th><th>이름</th><th>이메일</th><th>역할</th><th>비밀번호</th><th>작성글수</th><th>가입일시</th></tr>
+            <tr><th>작성자ID</th><th>이름</th><th>이메일</th><th>역할</th><th>비밀번호</th><th>작성글수</th><th>가입일시</th></tr>
             <tr th:each="author : ${author}">
                 <td th:text = "${author.id}"></td>
                 <td th:text = "${author.name}"></td>
@@ -22,6 +27,32 @@
                 <td th:text = "${author.createdTime}"></td>
             </tr>
         </table>
+        <div class="float-end">
+            <button onclick="showUpdateForm()" class="btn btn-primary">수정</button>
+            <a th:href="@{/author/delete/{id}(id=${author.id})}" class="btn btn-primary">삭제</a>
+        </div>
+        <br> <!--모달창 : 화면에 감춰둔다...-->
+        <div id="update-form" class="mt-4">
+            <form th:action="@{/author/update/{id}(id=${author.id})}" method="post">
+                <div class="form-group">
+                    <label for="name">이름</label>
+                    <input type="text" class="form-control" id="name" name="name" size="10" maxlength="10" th:value="${author.name}">
+                </div>
+                <div class="form-group">
+                    <label for="password">비밀번호</label>
+                    <input type="password" class="form-control" id="password" name="password" size="20" maxlength="20" th:value="${author.password}">
+                </div>
+                <br>
+                <div class="form-group">
+                    <a th:href="@{/author/detail/{id}(id=${author.id})}"><button type="submit" class="btn btn-secondary">수정완료</button></a>
+                </div>
+            </form>
+        </div>
     </div>
+    <script>
+        function showUpdateForm(){
+            document.getElementById('update-form').style.display = 'block'
+        }
+    </script>
 </body>
 </html>

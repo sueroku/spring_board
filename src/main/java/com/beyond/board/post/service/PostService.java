@@ -1,14 +1,12 @@
 package com.beyond.board.post.service;
 
 import com.beyond.board.author.domain.Author;
-import com.beyond.board.author.dto.AuthorDetResDto;
-import com.beyond.board.author.dto.AuthorListResDto;
-import com.beyond.board.author.dto.AuthorSaveReqDto;
 import com.beyond.board.author.service.AuthorService;
 import com.beyond.board.post.domain.Post;
 import com.beyond.board.post.dto.PostDetResDto;
 import com.beyond.board.post.dto.PostListResDto;
 import com.beyond.board.post.dto.PostSaveReqDto;
+import com.beyond.board.post.dto.PostUpdateReqDto;
 import com.beyond.board.post.repository.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +44,9 @@ public class PostService {
 
     public List<PostListResDto> postList(){
         List<PostListResDto> postResDtos = new ArrayList<>();
-        List<Post> posts = postRepository.findAll();
+//        List<Post> posts = postRepository.findAll();
+//        List<Post> posts = postRepository.findAllFetch();
+        List<Post> posts = postRepository.findAllLeftjoin();
         for(Post p : posts){
             postResDtos.add(p.listFromEntity());
         }
@@ -56,5 +56,17 @@ public class PostService {
     public PostDetResDto postDetail(Long id){
         Post post = postRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Post is not found!"));
         return post.detFromEntity();
+    }
+
+    @Transactional
+    public void postDelete(Long id){
+        postRepository.deleteById(id);
+    }
+
+    @Transactional
+    public void postUpdate(Long id, PostUpdateReqDto dto){
+        Post post = postRepository.findById(id).orElseThrow(()->new EntityNotFoundException("Post is not found!"));
+        post.updatePost(dto);
+        postRepository.save(post);
     }
 }

@@ -1,8 +1,8 @@
 package com.beyond.board.author.controller;
 
-import com.beyond.board.author.dto.AuthorDetResDto;
 import com.beyond.board.author.dto.AuthorSaveReqDto;
 import com.beyond.board.author.dto.AuthorListResDto;
+import com.beyond.board.author.dto.AuthorUpdateReqDto;
 import com.beyond.board.author.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,6 +49,20 @@ public class AuthorController {
 //        AuthorDetResDto authorDetResDto = authorService.authorDetail(id);
         model.addAttribute("author", authorService.authorDetail(id));
         return "author/author_detail";
+    }
+
+//    @DeleteMapping("/author/delete/{id}") // 정석(axios)대로 한다면...
+    @GetMapping("/author/delete/{id}")
+    public String authorDelete(@PathVariable Long id){
+        authorService.authorDelete(id);
+        return "redirect:/author/list";
+    }
+
+    @PostMapping("/author/update/{id}")
+    public String authorUpdate(@PathVariable Long id, @ModelAttribute AuthorUpdateReqDto dto, Model model){
+//        model.addAttribute("author",authorService.authorUpdate(id,dto));
+        authorService.authorUpdate(id,dto);
+        return "redirect:/author/detail/"+id;
     }
 
 

@@ -19,7 +19,7 @@
       </div>
       <br>
       <table class="table">
-          <tr><th>ID</th><th>이름</th><th>이메일</th></tr>
+          <tr><th>작성자ID</th><th>이름</th><th>이메일</th></tr>
           <tr th:each="author : ${authorList}">
               <td th:text = "${author.id}"></td>
               <td th:text = "${author.name}"></td>

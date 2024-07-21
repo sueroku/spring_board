@@ -1,17 +1,19 @@
 package com.beyond.board.author.domain;
 
 import com.beyond.board.author.dto.AuthorListResDto;
+import com.beyond.board.author.dto.AuthorUpdateReqDto;
 import com.beyond.board.common.BaseTimeEntity;
 import com.beyond.board.post.domain.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
+//import org.hibernate.annotations.CreationTimestamp;
+//import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -31,11 +33,12 @@ public class Author extends BaseTimeEntity {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-    @OneToMany(mappedBy = "author")
-    private List<Post> posts;
+//    일반적으로 부모 엔티티(자식 객체에 영향을 끼칠 수 있는 엔티티)에 cascade 옵션을 설정
+    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL) // remove persist 보려고 all로 해놓았다. 실무에서  all은 많이 안쓴다. 나중에는 delYn으로 처리할때 persist는 많이 쓴다.
+    private List<Post> posts; // = new ArrayList<>(); #071901 해결 첫번째시도
 
 
-//    위의 생성자 세트 어노테이션이 만약에 없다면
+//    위의 생성자 세트 어노테이션(@B ~ @N)이 만약에 없다면
 //    @Builder // 이런식으로...   // create 때 썼다...
 //    public Author(String name, String email, String password, Role role){
 //        this.name = name;
@@ -49,6 +52,12 @@ public class Author extends BaseTimeEntity {
         return new AuthorListResDto().builder()
                 .id(this.id).email(this.email).name(this.name).build();
     }
+
+    public void updateAuthor(AuthorUpdateReqDto dto){
+        this.name = dto.getName();
+        this.password = dto.getPassword();
+    }
+
 
 //    public AuthorDetResDto detFromEntity(){
 //        LocalDateTime localDateTime = this.getCreatedTime();

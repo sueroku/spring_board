@@ -1,52 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>게시판 서비스_내용조회</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-    />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"/>
+      <style>
+          #update-form{
+              display : none;
+          }
+      </style>
   </head>
   <body>
-    <object style="width: 100%;" data="../common/header.html" type="text/html"></object>
-    <div class="container">
-        <div class="page-header"><h3>🖥 게시글 상세조회</h3></div>
-            <div class="float-end">
-                <input type="text" id="postnum">
-                <button class="btn btn-primary" onclick="dataLoad()">조회</button> <!--"inquiry()"-->
-            </div>
-            <table class="table" id="postTable"></table>
-                <!-- <tr><td>id</td><td id></td></tr>
-                <tr><td>title</td><td>hello1</td></tr>
-                <tr><td>contents</td><td>hello1...</td></tr>
-                <tr><td>authorID</td><td>1</td></tr> --> <!--강사님은 td에 id 달았다.-->
+      <div th:replace="common/header :: headerFragment"></div>
+      <br>
+        <div class="container">
+            <div class="page-header"><h3>🖥 게시글 상세조회</h3></div>
+            <table class="table">
+                <tr><td>게시글ID</td><td th:text = "${post.id}"></td></tr>
+                <tr><td>title</td><td th:text = "${post.title}"></td></tr>
+                <tr><td>contents</td><td style="white-space : pre-wrap; word-break:break-all;" th:text = "${post.contents}"></td></tr>
+                <tr><td>작성자email</td><td th:text = "${post.author_email}"></td></tr>
+                <tr><td>등록일</td><td th:text = "${post.createdTime}"></td></tr>
+                <tr><td>수정일</td><td th:text = "${post.updateTime}"></td></tr>
             </table>
-    </div>
-
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-      // function inquiry(){
-      //   let userId = 0;
-      //   userId = document.getElementById("num");
-      //   dataLoad(userId);
-      // } // 내가 시도
-
-      
-      async function dataLoad(){ //dataLoad(i) 내가시도
-        let postId = document.getElementById("postnum").value;
-        const respose = await axios.get("http://localhost:8081/post/detail"+"/"+postId);
-        // const respose = await axios.get("https://jsonplaceholder.typicode.com/posts"+"/"+postId);
-        document.getElementById("postTable").innerHTML = `<tr><td>ID</td><td>${respose.data.id}</td></tr><tr><td>title</td><td>${respose.data.title}</td></tr><tr><td>contents</td><td>${respose.data.contents}</td></tr>`
-
-
-        // try{ 내가 시도
-        //   const respose = await axios.get("https://jsonplaceholder.typicode.com/posts"+"/"+i);
-        //   document.getElementsByClassName("table").innerHTML = `<tr><td>userId</td><td>${respose.userId}</td></tr><tr><td>id</td><td>${respose.id}</td></tr><tr><td>title</td><td>${respose.title}</td></tr><tr><td>body</td><td>${respose.body}</td></tr>`
-        // }catch(e){
-        //   console.log(e); }
-      }
-    </script>
+          <div class="float-end">
+              <button onclick="showUpdateForm()" class="btn btn-primary">수정</button>
+              <a th:href="@{/post/delete/{id}(id=${post.id})}" class="btn btn-primary">삭제</a>
+          </div>
+          <br>
+          <div id="update-form" class="mt-4">
+              <form th:action="@{/post/update/{id}(id=${post.id})}" method="post">
+                  <div class="form-group">
+                      <label for="title">제목</label>
+                      <input type="text" class ="form-control" id="title" name="title" size="20" maxlength="15" th:value="${post.title}">
+                  </div>
+                  <div class="form-group">
+                      <label for="contents">내용</label><br>
+                      <textarea name="contents" class="form-control" id="contents" rows="10" maxlength="800"  th:text="${post.contents}"></textarea>
+                  </div>
+                  <br>
+                  <div class="form-group">
+                      <a th:href="@{/post/detail/{id}(id=${post.id})}"><button type="submit" class="btn btn-secondary">수정완료</button></a>
+                  </div>
+              </form>
+          </div>
+        </div>
+      <script>
+          function showUpdateForm(){
+              document.getElementById('update-form').style.display = 'block'
+          }
+      </script>
   </body>
 </html>
+
+
+<!-- 삭제 수정 요청은 원래(restful)라면 axios 로 요청 보내고 자바스크립트 어찌구~-->
+<!--href 는 기본적으로 get요청이에용-->
