@@ -28,7 +28,7 @@ public class AuthorService {
     @Transactional
     public Author authorCreate(AuthorSaveReqDto dto){
         if(authorRepository.findByEmail(dto.getEmail()).isPresent()){
-            throw new IllegalArgumentException("It's alreadt existed.");
+            throw new IllegalArgumentException("It's already existed.");
         }
         Author author = dto.toEntity();
 //        cascade persist 테스트 remove 테스트는 회원삭제로 대체.

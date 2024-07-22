@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class PostUpdateReqDto {
     private String title;
     private String contents;
+
+//    업데이트타임은 업데이트 안해주나
 }

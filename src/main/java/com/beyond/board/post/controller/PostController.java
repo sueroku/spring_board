@@ -1,12 +1,20 @@
 package com.beyond.board.post.controller;
 
+import com.beyond.board.post.dto.PostListResDto;
 import com.beyond.board.post.dto.PostSaveReqDto;
 import com.beyond.board.post.dto.PostUpdateReqDto;
 import com.beyond.board.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @Controller
@@ -28,10 +36,23 @@ public class PostController {
         return "redirect:/post/list";
     }
 
+//    @GetMapping("/post/list")
+//    public String postList(Model model){
+//        model.addAttribute("postList", postService.postList());
+//        return "post/post_list";
+//    }
+
     @GetMapping("/post/list")
-    public String postList(Model model){
-        model.addAttribute("postList", postService.postList());
+    public String postList(Model model, @PageableDefault(size = 5, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable){
+        model.addAttribute("postList", postService.postList(pageable));
         return "post/post_list";
+    }
+
+    @GetMapping("/post/list/page")
+    @ResponseBody
+//    Pageble 요청 방법 : localhost:8080/post/list/page?size=10&page=0
+    public Page<PostListResDto> postListTes(@PageableDefault(size = 10, sort = "createdTime", direction = Sort.Direction.DESC) Pageable pageable){ // 이건 관리자가 정한 디폴트 값, 사용자가 값을 전달하면 그 값으로 덮어쓴다.
+        return postService.postListPage(pageable); // 모든 페이지 정보를 끌고 오는게 아니라 사용자가 보는 몇번페이지의 값들의 목록만 들고 온다.
     }
 
     @GetMapping("/post/detail/{id}")

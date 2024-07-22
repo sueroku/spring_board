@@ -5,12 +5,14 @@ import com.beyond.board.common.BaseTimeEntity;
 import com.beyond.board.post.dto.PostDetResDto;
 import com.beyond.board.post.dto.PostListResDto;
 import com.beyond.board.post.dto.PostUpdateReqDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Entity
@@ -32,6 +34,11 @@ public class Post extends BaseTimeEntity {
     @JoinColumn(name = "author_id")
     private Author author;
 
+    @Column(nullable = false) // 기존의 데이터에 안들어가서... 빼려고 했으나 필요하겠구나! 싶어서 기존 데이터에 update-set 하고 낫널 조건 넣자!
+    private String appointment;
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss") // 내가 시도
+    private LocalDateTime appointmentTime;
+
 
     public PostListResDto listFromEntity(){
         return new PostListResDto().builder()
@@ -50,5 +57,9 @@ public class Post extends BaseTimeEntity {
     public void updatePost(PostUpdateReqDto dto){
         this.title = dto.getTitle();
         this.contents = dto.getContents();
+    }
+
+    public void updatePostAppointment(String yn){
+        this.appointment = yn;
     }
 }
