@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!--    콘솔로그 설정 -->
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm} %logger{36}-%msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--    일반로그파일 설정-->
+    <!--    로그설정에서 롤링이라는 것은 날짜 변함에 따라 별도의 파일을 생성하는 것-->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <!--            %logger{36} : 로거의이름(클래스명)을 최대 36자까지만 출력 -->
+            <!--            %msg%n : 로그메시지를 출력하고 마지막에 끝에서 줄바꿈-->
+            <pattern>%d{HH:mm} %logger{36}-%msg%n</pattern>
+        </encoder>
+        <file>logs/app.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--    에러로그파일 설정-->
+    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <encoder>
+            <pattern>%d{HH:mm} %logger{36}-%msg%n</pattern>
+        </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <file>logs/app-error.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/app-error.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>10</maxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <!--    로그레벨 관련 설정-->
+    <root level="info">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="ERROR_FILE"/>
+    </root>
+
+</configuration>
+
+
+
+
+
+
+
+
+
+<!--<?xml version="1.0" encoding="UTF-8" ?>-->
+<!--<configuration>-->
+<!--&lt;!&ndash;    콘솔로그 설정&ndash;&gt;-->
+<!--    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>%d{yyyy-MM-day HH:mm} %logger{36}-%msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+
+
+<!--&lt;!&ndash;    일반로그파일 설정&ndash;&gt;-->
+<!--&lt;!&ndash;    로그파일에서 롤링이라는 것은 날짜 변함에 따라 별도의 파일을 생성하는 것&ndash;&gt;-->
+<!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <encoder>-->
+<!--&lt;!&ndash;            %logger{36} 로거의 이름(클래스명)을 최대 36길이까지만 출력&ndash;&gt;-->
+<!--&lt;!&ndash;            %ㅡㄶ%ㅜ : 로그메세지를 출력하고 마지막에 끝에서 줄바꿈&ndash;&gt;-->
+<!--            <pattern>%d{HH:mm} %logger{36}-%msg%n</pattern> &lt;!&ndash;<pattern>%d{yyyy-MM-day HH:mm} %logger{36}-%msg%n</pattern>&ndash;&gt;-->
+<!--        </encoder>-->
+<!--        <file>logs/app-log.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>logs/app-logs.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <maxHistory>10</maxHistory>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+
+
+<!--&lt;!&ndash;    에러로그파일 설정&ndash;&gt;-->
+<!--    <appender name="ERROR_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+<!--        <encoder>-->
+<!--            <pattern>%d{yyyy-MM-day HH:mm} %logger{36}-%msg%n</pattern>-->
+<!--        </encoder>-->
+<!--        <filter class ="ch.qos.logback.classic.filter.LevelFilter">-->
+<!--            <level>error</level>-->
+<!--            <onMatch>ACCEPT</onMatch>-->
+<!--            <onMismatch>DENY</onMismatch>-->
+<!--        </filter>-->
+<!--        <file>logs/app-error.log</file>-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>logs/app-logs.%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <maxHistory>10</maxHistory>-->
+<!--        </rollingPolicy>-->
+<!--    </appender>-->
+
+<!--&lt;!&ndash;    로그레벨 관련 설정&ndash;&gt;-->
+<!--    <root level="info">-->
+<!--        <appender-ref ref="CONSOLE"/>-->
+<!--        <appender-ref ref="FILE"/>-->
+<!--        <appender-ref ref="ERROR_FILE"/>-->
+<!--    </root>-->
+<!--</configuration>-->

@@ -30,10 +30,15 @@ public class AuthorService {
         if(authorRepository.findByEmail(dto.getEmail()).isPresent()){
             throw new IllegalArgumentException("It's already existed.");
         }
+        if(dto.getPassword().length()<8){
+            throw new IllegalArgumentException("Password is too short!");
+        }
         Author author = dto.toEntity();
 //        cascade persist 테스트 remove 테스트는 회원삭제로 대체.
 //        author.getPosts().add(Post.builder().title("가입인사").contents("안녕하세요."+dto.getName()+"입니다.").build()); // postRepo(.save()하지도 않음) 접근도 안했는데 해준다. == cascade => 안되는 뎁쇼...?#071901
-        author.getPosts().add(Post.builder().title("가입인사").author(author).contents("안녕하세요."+dto.getName()+"입니다.").build());// #071901 해결 두번째시도
+
+//        post에 appointment not null 로 넣게 되면서 꼭 넣어줘야한다.
+        author.getPosts().add(Post.builder().title("가입인사").appointment("N").author(author).contents("안녕하세요."+dto.getName()+"입니다.").build());// #071901 해결 두번째시도
         Author savedAuthor = authorRepository.save(author);
         return savedAuthor;
     }

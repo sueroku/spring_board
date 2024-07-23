@@ -4,6 +4,7 @@ import com.beyond.board.author.dto.AuthorSaveReqDto;
 import com.beyond.board.author.dto.AuthorListResDto;
 import com.beyond.board.author.dto.AuthorUpdateReqDto;
 import com.beyond.board.author.service.AuthorService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +14,7 @@ import java.util.List;
 
 //@RestController
 @Controller
+@Slf4j
 public class AuthorController {
 
     private final AuthorService authorService;
@@ -47,6 +49,8 @@ public class AuthorController {
     @GetMapping("/author/detail/{id}")
     public String authorDetail(@PathVariable Long id, Model model){
 //        AuthorDetResDto authorDetResDto = authorService.authorDetail(id);
+//        log.info("get요청, parameter 는" + id);
+//        log.info("method명 : authorDetail");
         model.addAttribute("author", authorService.authorDetail(id));
         return "author/author_detail";
     }

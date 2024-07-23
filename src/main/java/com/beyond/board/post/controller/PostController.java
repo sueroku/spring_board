@@ -4,6 +4,7 @@ import com.beyond.board.post.dto.PostListResDto;
 import com.beyond.board.post.dto.PostSaveReqDto;
 import com.beyond.board.post.dto.PostUpdateReqDto;
 import com.beyond.board.post.service.PostService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.List;
 
 
 @Controller
+@Slf4j //
 public class PostController {
 
     private final PostService postService;
@@ -57,6 +59,8 @@ public class PostController {
 
     @GetMapping("/post/detail/{id}")
     public String postDetail(@PathVariable Long id, Model model){
+//        log.info("get요청, parameter 는" + id);
+//        log.info("method명 : postDetail");
         model.addAttribute("post", postService.postDetail(id));
         return "post/post_detail";
     }

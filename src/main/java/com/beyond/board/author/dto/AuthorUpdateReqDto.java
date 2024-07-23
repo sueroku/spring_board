@@ -8,8 +8,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 //@Builder
-//@AllArgsConstructor
-//@NoArgsConstructor // 필요 없어용
+@AllArgsConstructor
+@NoArgsConstructor // 필요 없어용
 public class AuthorUpdateReqDto {
     private String name;
     private String password;

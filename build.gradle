@@ -33,9 +33,14 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'io.springfox:springfox-boot-starter:3.0.0'
+//	implementation 'io.springfox:springfox-boot-starter:3.0.0' // 스웨거 관련인데 왜 여기 있니
 //	batch의존성 추가 야호
 	implementation 'org.springframework.boot:spring-boot-starter-batch'
+
+//	로그인 관련 시큐리티 의존성 추가
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	타임리프에서 시큐리티 문법을 쓰기 위한 라이브러리
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
 tasks.named('test') {
