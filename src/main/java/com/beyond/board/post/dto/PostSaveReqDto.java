@@ -18,15 +18,15 @@ import java.time.LocalDateTime;
 public class PostSaveReqDto {
     private String title;
     private String contents;
-    private String email; // 추후 로그인 기능 이후에는 없어질 dto
+//    private String email; // 추후 로그인 기능 이후에는 없어질 dto
 
     private String appointment;
     private String appointmentTime;
 
 
-    public Post toEntity(Author author, LocalDateTime appointMentTime){
+    public Post toEntity(Author author, LocalDateTime appointmentTime){
         Post post = Post.builder().title(this.title).contents(this.contents)
-                .appointment(this.appointment).appointmentTime(appointMentTime).author(author).build();
+                .appointment(this.appointment).appointmentTime(appointmentTime).author(author).build();
         return post;
     }
 

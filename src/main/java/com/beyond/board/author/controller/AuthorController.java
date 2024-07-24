@@ -27,6 +27,12 @@ public class AuthorController {
     public String authorCreate(){
         return "author/author_register";
     }
+
+    @GetMapping("/author/login-screen")
+    public String authorLogin(){
+        return "author/login-screen";
+    }
+
     @PostMapping("/author/create")
     public String authorCreatePost(@ModelAttribute AuthorSaveReqDto dto){ // 모를때는 디버깅기능 좀 써라.. 뭐가 들어오는지 보인다.
         try {
@@ -68,6 +74,9 @@ public class AuthorController {
         authorService.authorUpdate(id,dto);
         return "redirect:/author/detail/"+id;
     }
+
+
+
 
 
 //    @PostMapping("/author/create")

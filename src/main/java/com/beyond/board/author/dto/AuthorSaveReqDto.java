@@ -5,6 +5,8 @@ import com.beyond.board.author.domain.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 
@@ -19,9 +21,9 @@ public class AuthorSaveReqDto {
     private Role role; // Role로 두고 그냥 this.role 넣어도 알아서 형변환해주기는 한다.
 
 
-    public Author toEntity(){
+    public Author toEntity(String encodedPassword){
         Author author = Author.builder()
-                .password(this.password)
+                .password(encodedPassword)
                 .name(this.name) // 순서 상관 없다.
                 .email(this.email)
                 .posts(new ArrayList<>()) // #071901 해결 두번째시도
